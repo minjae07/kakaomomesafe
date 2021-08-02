@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>MOME Safe</title>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#design").load("./design.html");
+                // 원하는 파일 경로를 삽입하면 된다
+                /* $("#gps").load("./gps.html"); */
+                // 추가 인클루드를 원할 경우 이런식으로 추가하면 된다
+            });
+        </script>
+        <style>
+            .MapControlView {
+                position: absolute;
+                top: 3px;
+                right: 120px;
+                width: 40px;
+                height: 40px;
+                z-index: 1;
+                cursor: pointer;
+                background: url(//t1.daumcdn.net/localimg/localimages/07/2018/pc/common/img_search.png) no-repeat -150px -450px;
+            }
+        </style>
+    </head> 
+    <body>
+        <div id="map" style="position:absolute; width:100%;height:100%;"></div>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7597617751aa037361b8e4387b734472&libraries=clusterer,services"></script>
+        <!-- 링크 -->
+        <div id="design"></div>
+        <!-- 지도생성 -->
+        <script>
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapCenter = new kakao.maps.LatLng(35.912145, 128.807767), // 지도의 중심좌표
+                mapOption = {
+                    center: mapCenter, // 지도의 중심좌표
+                    level: 5 // 지도의 확대 레벨
+                };
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+            // 지도를 생성합니다
+            // 스카이뷰와 줌 컨트롤러
+            // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+            var mapTypeControl = new kakao.maps.MapTypeControl();
+            // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+            // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+            map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+            // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+            var zoomControl = new kakao.maps.ZoomControl();
+            map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+        </script>
+        <!-- 링크 -->
+        <!-- <div id="gps"></div> -->
+        <script>
+            // 가로등 클러스터
+            var clusterer_light = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+                disableClickZoom: true,
+                minLevel: 2 // 클러스터 할 최소 지도 레벨
+            });
+            var imageSrc_light = "assets/img/light.png";
+            var imageSize_light = new kakao.maps.Size(30, 30);
+            // 마커 이미지 생성
+            var markerImage_light = new kakao.maps.MarkerImage(imageSrc_light, imageSize_light);
+            function getlight() {
+                var check = document.getElementById("light");
+                if (check.checked) {
+                    $(document).ready(function () {
+                        console.log('가로등 불러오기 성공');
+                        $.get("js/lightmap.json", function (data) {
+                            var marker_light = $(data.positions).map(function (i, position) {
+                                return new kakao.maps.Marker({
+                                    position: new kakao.maps.LatLng(position.lat, position.lng),
+                                    image: markerImage_light
+                                });
+                            });
+                            marker_lc = marker_light;
+                            // 클러스터러에 마커들을 추가합니다
+                            clusterer_light.addMarkers(marker_lc);
+                        });
+                    });
+                } else {
+                    clusterer_light.removeMarkers(marker_lc);
+                    marker_lc = [];
+                }
+            }
+        </script>
+        <script>
+            // cctv 클러스터
+            var clusterer_cctv = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+                disableClickZoom: true,
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+                minLevel: 10 // 클러스터 할 최소 지도 레벨
+            });
+            var imageSrc_cctv = "assets/img/cctv.png";
+            var imageSize_cctv = new kakao.maps.Size(40, 30);
+            // 마커 이미지 생성
+            var markerImage_cctv = new kakao.maps.MarkerImage(imageSrc_cctv, imageSize_cctv);
+            function getcctv() {
+                var check = document.getElementById("cctv");
+                if (check.checked) {
+                    $(document).ready(function () {
+                        console.log('cctv 불러오기 성공');
+                        $.get("js/cctvmap.json", function (data) {
+                            var marker_cctv = $(data.positions).map(function (i, position) {
+                                return new kakao.maps.Marker({
+                                    position: new kakao.maps.LatLng(position.lat, position.lng),
+                                    image: markerImage_cctv
+                                });
+                            });
+                            marker_cc = marker_cctv;
+                            // 클러스터러에 마커들을 추가합니다
+                            clusterer_cctv.addMarkers(marker_cc);
+                        });
+                    });
+                } else {
+                    clusterer_cctv.removeMarkers(marker_cc);
+                    marker_cc = [];
+                }
+            }
+        </script>
+        <script>
+            // 보건소 클러스터
+            var clusterer_hosp = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+                disableClickZoom: true,
+                minLevel: 10 // 클러스터 할 최소 지도 레벨
+            });
+            var imageSrc_hosp = "assets/img/hospital.png";
+            var imageSize_hosp = new kakao.maps.Size(30, 40);
+            // 마커 이미지 생성
+            var markerImage_hosp = new kakao.maps.MarkerImage(imageSrc_hosp, imageSize_hosp);
+            function gethospital() {
+                var check = document.getElementById("hospital");
+                if (check.checked) {
+                    $(document).ready(function () {
+                        console.log("보건소 불러오기 성공");
+                        $.get("js/hospitalmap.json", function (data) {
+                            var marker_hosp = $(data.positions).map(function (i, position) {
+                                return new kakao.maps.Marker({
+                                    position: new kakao.maps.LatLng(position.lat, position.lng),
+                                    image: markerImage_hosp
+                                });
+                            });
+                            marker_hc = marker_hosp;
+                            // 클러스터러에 마커들을 추가합니다
+                            clusterer_hosp.addMarkers(marker_hc);
+                        });
+                    });
+                } else {
+                    clusterer_hosp.removeMarkers(marker_hc);
+                    marker_hc = [];
+                }
+            }
+        </script>
+        <script>
+            // 스쿨존 클러스터
+            var clusterer_school = new kakao.maps.MarkerClusterer({
+                map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+                averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+                disableClickZoom: true,
+                minLevel: 10 // 클러스터 할 최소 지도 레벨
+            });
+            var imageSrc_school = "assets/img/schoolzone.png";
+            var imageSize_school = new kakao.maps.Size(40, 40);
+            // 마커 이미지 생성
+            var markerImage_school = new kakao.maps.MarkerImage(imageSrc_school, imageSize_school);
+            function getschoolzone() {
+                var check = document.getElementById("school");
+                if (check.checked) {
+                    $(document).ready(function () {
+                        console.log("스쿨존 불러오기 성공");
+                        $.get("js/schoolmap.json", function (data) {
+                            var marker_school = $(data.positions).map(function (i, position) {
+                                return new kakao.maps.Marker({
+                                    position: new kakao.maps.LatLng(position.lat, position.lng),
+                                    image: markerImage_school
+                                });
+                            });
+                            marker_sc = marker_school;
+                            // 클러스터러에 마커들을 추가합니다
+                            clusterer_school.addMarkers(marker_sc);
+                        });
+                    });
+                } else {
+                    clusterer_school.removeMarkers(marker_sc);
+                    marker_sc = [];
+                }
+            }
+        </script>
+        <div class="MapControlView" onclick="getCurrentPos()"></div>
+		<script>
+			// gps로 위치불러오기
+				function getCurrentPos(){
+						navigator.geolocation.getCurrentPosition(function (position) {
+							var lat = position.coords.latitude, // 위도
+							lon = position.coords.longitude; // 경도
+							var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+							message = '<div style="height: 25px; padding:2px 10px; margin: 3px;">현재 위치입니다.</div>' 	// 인포윈도우에 표시될 내용입니다
+							// 마커와 인포윈도우를 표시합니다
+							displayMarker(locPosition, message);
+					});
+					// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+					function displayMarker(locPosition, message) { // 마커를 생성합니다
+						var imageSrc_loc = "assets/img/marker_loc.png";
+			            var imageSize_loc = new kakao.maps.Size(40, 40); // 마커 이미지 생성
+			            var markerImage_loc = new kakao.maps.MarkerImage(imageSrc_loc, imageSize_loc);
+						var marker_loc = new kakao.maps.Marker({
+							map: map, 
+							position: locPosition,
+							image: markerImage_loc
+							});
+						var iwContent = message, // 인포윈도우에 표시할 내용
+							iwRemoveable = true;
+						// 인포윈도우를 생성합니다
+						var infowindow = new kakao.maps.InfoWindow({content: iwContent});
+						// 인포윈도우를 마커위에 표시합니다
+						infowindow.open(map, marker_loc);
+						// 지도 중심좌표를 접속위치로 변경합니다
+						map.setCenter(locPosition);
+				}
+			};
+		</script>
+        <script>
+            // 이스터 에그
+            var imageSrc_eg = 'assets/img/egg.png', // 마커이미지의 주소입니다
+                imageSize_eg = new kakao.maps.Size(10, 10)
+            // 마커이미지의 크기입니다
+            // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+            var markerImage_eg = new kakao.maps.MarkerImage(imageSrc_eg, imageSize_eg),
+                markerPosition_eg = new kakao.maps.LatLng(35.8825955, 128.635574);
+            // 마커가 표시될 위치입니다
+            // 마커를 생성합니다
+            var marker_eg = new kakao.maps.Marker({
+                position: markerPosition_eg, image: markerImage_eg // 마커이미지 설정
+            });
+            // 마커를 지도에 표시합니다.
+            marker_eg.setMap(map);
+            // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+            var iwContent = '<div style="padding:5px;">진수</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                iwRemoveable = true;
+            // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+            // 인포윈도우를 생성합니다
+            var infowindow_eg = new kakao.maps.InfoWindow({content: iwContent, removable: iwRemoveable});
+            // 마커에 클릭이벤트를 등록합니다
+            kakao.maps.event.addListener(marker_eg, 'click', function () { // 마커 위에 인포윈도우를 표시합니다
+                    infowindow_eg.open(map, marker_eg);
+                });
+        </script>
+        
+        <!-- 로드뷰 -->
+        <!-- 
+        <div id="container">
+            <div id="rvWrapper">
+                <div id="roadview" style="width:100%;height:100%;"></div>로드뷰를 표시할 div 입니다
+                <div id="close" title="로드뷰닫기" onclick="closeRoadview()">
+                    <span class="img"></span>
+                </div>
+            </div>
+            <div id="mapWrapper">
+                <div id="roadviewControl" onclick="setRoadviewRoad()"></div>
+            </div>
+        </div>
+        
+        <script>
+            var overlayOn = false, // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
+                container = document.getElementById('container'), // 지도와 로드뷰를 감싸고 있는 div 입니다
+                mapWrapper = document.getElementById('mapWrapper'), // 지도를 감싸고 있는 div 입니다
+                rvContainer = document.getElementById('roadview'); // 로드뷰를 표시할 div 입니다
+            // 로드뷰 객체를 생성합니다
+            var rv = new kakao.maps.Roadview(rvContainer);
+            // 좌표로부터 로드뷰 파노라마 ID를 가져올 로드뷰 클라이언트 객체를 생성합니다
+            var rvClient = new kakao.maps.RoadviewClient();
+            // 로드뷰에 좌표가 바뀌었을 때 발생하는 이벤트를 등록합니다
+            kakao.maps.event.addListener(rv, 'position_changed', function () { // 현재 로드뷰의 위치 좌표를 얻어옵니다
+                    var rvPosition = rv.getPosition();
+                    // 지도의 중심을 현재 로드뷰의 위치로 설정합니다
+                    map.setCenter(rvPosition);
+                    // 지도 위에 로드뷰 도로 오버레이가 추가된 상태이면
+                    if (overlayOn) { // 마커의 위치를 현재 로드뷰의 위치로 설정합니다
+                        marker.setPosition(rvPosition);
+                    }
+                });
+            // 마커 이미지 생성
+            var markerImage_rv = new kakao.maps.MarkerImage('assets/img/roadview.png', new kakao.maps.Size(40, 40));
+            var marker_rv = new kakao.maps.Marker({position: mapCenter, image: markerImage_rv, draggable: true});
+            // 마커에 dragend 이벤트를 등록합니다
+            kakao.maps.event.addListener(marker_rv, 'dragend', function (mouseEvent) { // 현재 마커가 놓인 자리의 좌표입니다
+                    var position = marker_rv.getPosition();
+                    // 마커가 놓인 위치를 기준으로 로드뷰를 설정합니다
+                    toggleRoadview(position);
+                });
+          	
+            // 전달받은 좌표(position)에 가까운 로드뷰의 파노라마 ID를 추출하여
+            // 로드뷰를 설정하는 함수입니다
+            function toggleRoadview(position) {
+                rvClient.getNearestPanoId(position, 50, function (panoId) { // 파노라마 ID가 null 이면 로드뷰를 숨깁니다
+                    if (panoId === null) {
+                        toggleMapWrapper(true, position);
+                    } else {
+                        toggleMapWrapper(false, position);
+                        // panoId로 로드뷰를 설정합니다
+                        rv.setPanoId(panoId, position);
+                    }
+                });
+            }
+            // 지도를 감싸고 있는 div의 크기를 조정하는 함수입니다
+            function toggleMapWrapper(active, position) {
+                if (active) { 
+                	// 지도를 감싸고 있는 div의 너비가 100%가 되도록 class를 변경합니다
+                    container.className = '';
+                    // 지도의 크기가 변경되었기 때문에 relayout 함수를 호출합니다
+                    map.relayout();
+                    // 지도의 너비가 변경될 때 지도중심을 입력받은 위치(position)로 설정합니다
+                    map.setCenter(position);
+                } else {
+                    // 지도만 보여지고 있는 상태이면 지도의 너비가 50%가 되도록 class를 변경하여
+                    // 로드뷰가 함께 표시되게 합니다
+                    if (container.className.indexOf('view_roadview') === -1) {
+                        container.className = 'view_roadview';
+                        // 지도의 크기가 변경되었기 때문에 relayout 함수를 호출합니다
+                        map.relayout();
+                        // 지도의 너비가 변경될 때 지도중심을 입력받은 위치(position)로 설정합니다
+                        map.setCenter(position);
+                    }
+                }
+            }
+            // 지도 위의 로드뷰 도로 오버레이를 추가,제거하는 함수입니다
+            function toggleOverlay(active) {
+                if (active) {
+                    overlayOn = true;
+                    // 지도 위에 로드뷰 도로 오버레이를 추가합니다
+                    map.addOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
+                    // 지도 위에 마커를 표시합니다
+                    marker_rv.setMap(map);
+                    // 마커의 위치를 지도 중심으로 설정합니다
+                    marker_rv.setPosition(map.getCenter());
+                    // 로드뷰의 위치를 지도 중심으로 설정합니다
+                    toggleRoadview(map.getCenter());
+                } else {
+                    overlayOn = false;
+                    // 지도 위의 로드뷰 도로 오버레이를 제거합니다
+                    map.removeOverlayMapTypeId(kakao.maps.MapTypeId.ROADVIEW);
+                    // 지도 위의 마커를 제거합니다
+                    marker_rv.setMap(null);
+                }
+            }
+            // 지도 위의 로드뷰 버튼을 눌렀을 때 호출되는 함수입니다
+            function setRoadviewRoad() {
+                var control = document.getElementById('roadviewControl');
+                // 버튼이 눌린 상태가 아니면
+                if (control.className.indexOf('active') === -1) {
+                    control.className = 'active';
+                    // 로드뷰 도로 오버레이가 보이게 합니다
+                    toggleOverlay(true);
+                } else {
+                    control.className = '';
+                    // 로드뷰 도로 오버레이를 제거합니다
+                    toggleOverlay(false);
+                }
+            }
+            // 로드뷰에서 X버튼을 눌렀을 때 로드뷰를 지도 뒤로 숨기는 함수입니다
+            function closeRoadview() {
+                var position = marker_rv.getPosition();
+                toggleMapWrapper(true, position);
+            }
+        </script>
+        -->
+    </body>
+</html>

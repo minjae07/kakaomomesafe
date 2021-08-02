@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+    <head>
+        <meta
+        charset="UTF-8">
+        <!-- Required meta tags -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>MOME Safe</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500&display=swap">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/jquery.mCustomScrollbar.min.css">
+        <link rel="stylesheet" href="assets/css/animate.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link
+        rel="stylesheet" href="assets/css/media-queries.css">
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link
+        rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+        <!-- 검색창 -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#search").load("./search.html");
+            });
+            $(document).ready(function () {
+                $("#qna").load("./MapQna.html");
+            });
+        </script>
+    </head>
+    <body>
+        <!-- Wrapper -->
+        <div
+            class="wrapper">
+            <!-- Sidebar -->
+            <nav
+                class="sidebar">
+                <!-- close sidebar menu -->
+                <div class="dismiss">
+                    <i class="fas fa-angle-double-left"></i>
+                </div>
+                <div class="logo">
+                    <h3>
+                        <a href="./intro.html"></a>
+                    </h3>
+                </div>
+                <div class="user-info">
+                    <h6>저희 MOMESafe의 방문을 환영합니다!</h6>
+                    <h6>MOMESafe는 이용해주시는 분들의 몸과 마음을 안전하게 하는것을 목표로 하고 있으며</h6>
+                    <h6>경산 내의 가로등과 CCTV, 스쿨존, 보건소의 위치를 보다 쉽게 보여질수 있도록 하였습니다.</h6>
+                </div>
+                <!-- 검색창 -->
+                <div class="bw">
+                    <button onclick="myFunction()" style="outline: none;">검색하기</button>
+                </div>
+                <!-- 메뉴바 -->
+                <ul class="list-unstyled menu-elements">
+                    <li class="active">
+                        <a data-toggle="collapse">
+                            <i class="fas fa-map"></i>지도
+                        </a>
+                        <ul class="collapseshow list-unstyled">
+                            <div class="category">
+                                <div>
+                                    <label class="switch" for="cctv">
+                                        <input type="checkbox" id="cctv" name="cctv" onclick='getcctv()'>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <p class="far fa-eye">&nbsp; CCTV</p>
+                                </div>
+                                <div>
+                                    <label class="switch" for="light">
+                                        <input type="checkbox" id="light" name="light" onclick='getlight()'>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <p class="fas fa-lightbulb">&nbsp; 가로등</p>
+                                </div>
+                                <div>
+                                    <label class="switch" for="hospital">
+                                        <input type="checkbox" id="hospital" name="hospital" onclick='gethospital()'>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <p class="fas fa-hospital">&nbsp; 보건소</p>
+                                </div>
+                                <div>
+                                    <label class="switch" for="school">
+                                        <input type="checkbox" id="school" name="school" onclick='getschoolzone()'>
+                                        <span class="slider"></span>
+                                    </label>
+                                    <p class="fas fa-car-crash">&nbsp; 스쿨존</p>
+                                </div>
+                            </div>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="./restarea.jsp">
+                            <i class="fas fa-pencil-alt"></i>
+                            MOME TOWN</a>
+                    </li>
+                    <li>
+                        <a class="scroll-link" href="#" onclick="qna()" style="cursor: pointer;">
+                            <i class="fas fa-user"></i>
+                            문의하기</a>
+                    </li>
+                </ul>
+                <div class="dark-light-buttons">
+                    <a class="btn btn-primary btn-customized-4 btn-customized-dark" href="#" role="button">Dark</a>
+                    <a class="btn btn-primary btn-customized-4 btn-customized-light" href="#" role="button">Light</a>
+                </div>
+            </nav>
+            <!-- End sidebar -->
+            <!-- Dark overlay -->
+            <!-- <div class="overlay"></div> -->
+            <!-- Content -->
+                <div
+                class="content"> <!-- open sidebar menu -->
+                <a class="btn btn-primary btn-customized open-menu" href="#" role="button">
+                    <i class="fas fa-angle-double-right"></i>
+                    <span>메뉴</span>
+                </a>
+            </div>
+            <!-- End content -->
+        </div>
+        <!-- End wrapper -->
+        <!-- Javascript -->
+        <script src="assets/js/jquery-3.3.1.min.js"></script>
+        <script src="assets/js/jquery-migrate-3.0.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/wow.min.js"></script>
+        <script src="assets/js/jquery.waypoints.min.js"></script>
+        <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        <div id="search"/>
+        <div id="qna"/>
+    </body>
+</html>

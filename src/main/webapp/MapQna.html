@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style type="text/css">
+	#qnabox {
+		position: absolute;
+		top: 550px;
+		left: 300px;
+		bottom: 10px;
+	    background: #fff;
+	    z-index: 10;
+	    font-size: 16px;
+	    border-style: double;
+	    border-radius: 20px;
+	    width: 300px;
+	    height: 200px;
+	    display: none;
+	}
+	#qnabox h6 {
+		padding: 10px;
+		margin: 5px;
+	}
+</style>
+</head>
+<body>
+	<div id="qnabox">
+		<h6 align="center">기능 사용중 문제점 또는</h6>
+		<h6 align="center"> 게시판, 채팅내에 악성유저</h6>
+		<h6 align="center">발견시 아래 이메일로 제보 바랍니다 </h6>
+		<h6 align="center">momesafe@safe.com</h6>	
+	</div>
+	<script>
+		function qna() {
+	        var qnabox = document.getElementById("qnabox");
+	        if (qnabox.style.display === "block") {
+	            qnabox.style.display = "none";
+	        } else {
+	            qnabox.style.display = "block";
+	        }
+	    }
+	</script>
+</body>
+</html>

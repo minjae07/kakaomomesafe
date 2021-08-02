@@ -1,0 +1,317 @@
+@charset "UTF-8";
+/* 구글폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Lobster+Two:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&family=Nanum+Gothic+Coding&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&display=swap');
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+section.notice {
+    padding: 80px 0;
+}
+.page-title {
+    margin-bottom: 60px;
+}
+.page-title h3 {
+    /* font-family: 'Lobster Two', cursive; */
+    font-family: 'Cabin Sketch', cursive;
+    font-size: 100px;
+    color: #333;
+    text-align: center;
+}
+#board-search .search-window {
+    padding: 15px 0;
+    background-color: #f9f7f9;
+}
+#board-search .search-window .search-wrap {
+    position: relative;
+    /*   padding-right: 124px; */
+    margin: 0 auto;
+    max-width: 650px;
+}
+#board-search .search-window .search-wrap input {
+    height: 40px;
+    position: relative;
+    width: 450px;
+    font-size: 14px;
+    padding: 7px 14px;
+    border: 1px solid #ccc;
+}
+#board-search .search-window .search-wrap input:focus {
+    border-color: #333;
+    outline: 0;
+    border-width: 1px;
+}
+#board-search .search-window .search-wrap .btn {
+    position: absolute;
+    /* right: 0; */
+    top: 0;
+    bottom: 0;
+    width: 108px;
+    padding: 0;
+    font-size: 16px;
+}
+.board-table {
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+.board-table a {
+    color: #333;
+    display: inline-block;
+    line-height: 1.4;
+    word-break: break-all;
+    vertical-align: middle;
+}
+.board-table a:hover {
+    text-decoration: underline;
+}
+.board-table th {
+    text-align: center;
+}
+.board-table .th-num {
+    width: 100px;
+    text-align: center;
+    font-weight: bold;
+}
+.board-table .th-writer {
+    width: 100px;
+    font-weight: bold;
+}
+.board-table .th-hit {
+    width: 100px;
+    font-weight: bold;
+}
+.board-table .th-date {
+    width: 200px;
+}
+.board-table th,
+.board-table td {
+    padding: 14px 0;
+}
+.board-table tbody td {
+    border-top: 1px solid #e7e7e7;
+}
+.board-table tbody th {
+    padding-left: 28px;
+    padding-right: 14px;
+    border-top: 1px solid #e7e7e7;
+}
+.board-table tbody th p {
+    display: none;
+}
+.btn {
+    display: inline-block;
+    padding: 0 30px;
+    font-size: 15px;
+    font-weight: 400;
+    background: transparent;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    text-transform: uppercase;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.btn-dark {
+    background: #555;
+    color: #fff;
+}
+.btn-dark:hover,
+.btn-dark:focus {
+    background: #373737;
+    border-color: #373737;
+    color: #fff;
+}
+.btn-dark {
+    background: #555;
+    color: #fff;
+}
+.btn-dark:hover,
+.btn-dark:focus {
+    background: #373737;
+    border-color: #373737;
+    color: #fff;
+}
+/* reset */
+* {
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+.blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -1px;
+    width: 1px;
+    height: 1px;
+}
+.search-window .select {
+    position: relative;
+    width: 106px;
+    height: 41px;
+    font-size: 15px;
+    color: #999;
+    border: 2px solid #ccc;
+    appearance: none;
+    -webkit-appearance: none;
+}
+.search-window .select::-ms-expand {
+    display: none;
+}
+
+.wrap1 a {
+	display: inline;
+	margin: 20px auto;
+	max-width: 180px;
+	text-decoration: none;
+	border-radius:10px;
+	padding: 20px 40px;
+	position: relative;
+	left:1000
+}
+
+.wrap2 a {
+	display: inline;
+	margin: 20px auto;
+	max-width: 180px;
+	text-decoration: none;
+	border-radius:10px;
+	padding: 20px 35px;
+	position: relative;
+	top: 50;
+	left: 1000
+}
+
+a.button {
+	color: rgba(30, 22, 54, 0.6);
+	box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button:hover {
+	color: rgba(255, 255, 255, 0.85);
+	box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+
+}
+.class1 .frm_btn {
+	background: #333;
+	background-image: -webkit-linear-gradient(top, #333, #555);
+	background-image: -moz-linear-gradient(top, #333, #555);
+	background-image: -ms-linear-gradient(top, #333, #555);
+	background-image: -o-linear-gradient(top, #333, #555);
+	background-image: linear-gradient(to bottom, #333, #555);
+	-webkit-border-radius: 10;
+	-moz-border-radius: 10;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 12px;
+	padding: 10px 20px 10px 20px;
+	text-decoration: none;
+	float: right;
+	display: inline;
+}
+
+.class1 .frm_btn:hover {
+	background: #222;
+	text-decoration: none;
+}
+
+/* 이미지업로드 */
+.file-upload-content {
+  display: none;
+  text-align: center;
+}
+
+.file-upload-input {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.image-upload-wrap {
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    position: relative;
+    width: 80%;
+    display: inline-block;
+}
+
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: #ddd;
+  border: 2px dashed #ccc;
+}
+
+.image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222;
+}
+
+.drag-text {
+  text-align: center;
+}
+
+.drag-text h3 {
+  color: #999;
+  padding: 60px 0;
+  font-size: 30px;
+}
+
+.file-upload-image {
+  max-height: 500px;
+  max-width: 90%;
+}
+
+.remove-image {
+  width: 200px;
+  margin: 5px;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.remove-image:hover {
+  background: #c13b2a;
+  color: #ffffff;
+  transition: all .2s ease;
+  cursor: pointer;
+}

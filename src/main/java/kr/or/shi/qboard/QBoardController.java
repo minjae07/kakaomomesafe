@@ -22,6 +22,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 
+import kr.or.shi.board.ArticleVO;
+
 @WebServlet("/Qboard/*")
 public class QBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -144,7 +146,34 @@ public class QBoardController extends HttpServlet {
 				articleVO = boardService.viewArticle(Integer.parseInt(q_articleNo));
 				request.setAttribute("article", articleVO);
 				showPage = "/QviewArticle.jsp";
-			}
+			}else if(action.equals("/QsearchArticles.do")) {
+	            String section_ = request.getParameter("section");
+	            String pageNum_ = request.getParameter("pageNum");
+	            String qkeyWord = request.getParameter("qkeyWord");
+	            String qkeyField = request.getParameter("qkeyField");
+//	            String keyField = request.getParameter("keyField");
+//	            String keyWord = request.getParameter("keyWord");
+
+	            int section = Integer.parseInt(((section_== null)? "1" : section_));
+	            int pageNum = Integer.parseInt(((pageNum_ == null)? "1" : pageNum_));
+	   
+	            Map<String, Integer> pagingMap = new HashMap<>();         /*section값과 pageNum값을 HashMap에 저장*/
+	            pagingMap.put("section", section);
+	            pagingMap.put("pageNum", pageNum);
+
+	            Map articleMap = boardService.listArticles(pagingMap);
+	            articleMap.put("section", section);
+	            articleMap.put("pageNum", pageNum);
+	            
+	            //boardService.serachArticle(keyField, keyWord);
+	            
+	            ArrayList<QArticleVO> searchArticleList1 = boardService.serachArticle2(qkeyWord, qkeyField);
+	         
+	            
+	            request.setAttribute("searchArticleList1", searchArticleList1);
+	            
+	            showPage = "/QsearchArticles.jsp";         
+	         }
 			
 			else if (action.equals("/QmodArticle.do")) {
 				Map<String, String> articleMap = upload(request, response);

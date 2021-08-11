@@ -31,7 +31,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/cryru/Documents/카카오톡 받은 파일/SpringKakaoMap (5)/src/main/webapp/WEB-INF/lib/commons-fileupload-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/cryru/Documents/카카오톡 받은 파일/SpringKakaoMap (5)/src/main/webapp/WEB-INF/lib/commons-io-2.9.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -97,11 +97,14 @@ public class BoardController extends HttpServlet {
 							
 				request.setAttribute("articleMap", articleMap);
 				showPage = "/listArticles.jsp";			
-			}else if(action.equals("/listArticles.do")) {
+			}
+			else if(action.equals("/searchArticles.do")) {
 	            String section_ = request.getParameter("section");
 	            String pageNum_ = request.getParameter("pageNum");
-	            String keyField = request.getParameter("keyField");
 	            String keyWord = request.getParameter("keyWord");
+	            String keyField = request.getParameter("keyField");
+//	            String keyField = request.getParameter("keyField");
+//	            String keyWord = request.getParameter("keyWord");
 
 	            int section = Integer.parseInt(((section_== null)? "1" : section_));
 	            int pageNum = Integer.parseInt(((pageNum_ == null)? "1" : pageNum_));
@@ -114,10 +117,12 @@ public class BoardController extends HttpServlet {
 	            articleMap.put("section", section);
 	            articleMap.put("pageNum", pageNum);
 	            
-	            boardService.serachArticle(keyField, keyWord);
-	         
-	            request.setAttribute("articleMap", articleMap);
-	            showPage = "/listArticles.jsp";         
+	            //boardService.serachArticle(keyField, keyWord);
+	            ArrayList<ArticleVO> searchArticleList = boardService.serachArticle(keyWord, keyField);
+	            
+	            request.setAttribute("searchArticleList", searchArticleList);
+	            
+	            showPage = "/searchArticles.jsp";         
 	         }
 			else if(action.equals("/articleForm.do")) {
 				showPage = "/articleForm.jsp";

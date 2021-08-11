@@ -21,6 +21,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import kr.or.shi.board.ArticleVO;
+
 public class QBoardDAO {
 	private DataSource dataFactory;
 	Connection conn;
@@ -78,7 +80,6 @@ public class QBoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		
 		return articlesList;
 	}
@@ -446,5 +447,89 @@ public class QBoardDAO {
 		
 		return articleVO;
 	}
+	public ArrayList<QArticleVO> getMemberlist3(String qkeyWord, String qkeyField) {
+	      ArrayList<QArticleVO> articlesList = new ArrayList<>();
+	     
+	      try {
+	         conn = dataFactory.getConnection();
+	         /* level : 오라클에서 제공하는 가상 컬럼으로 글의 깊이를 나타냄 */
+
+	         String sql ="select * from q_board  WHERE "+qkeyField+"  LIKE '%"   +qkeyWord+   "%' order by q_id";
+	         
+	           
+	            pstmt = conn.prepareStatement(sql);
+	            
+	            ResultSet rs = pstmt.executeQuery();
+	            
+	            System.out.println("rs : " + rs.getRow());
+	         
+	         while(rs.next()) {
+	        	   
+					int articleNo = rs.getInt("q_articleNo");
+					int parentNo = rs.getInt("q_parentNo");
+					String title = rs.getString("q_title");
+					String id = rs.getString("q_id");
+					String content = rs.getString("q_content");
+					Date writeDate = rs.getDate("q_writeDate");
+					
+					
+					QArticleVO articleVO = new QArticleVO();
+					
+					
+					articleVO.setQ_articleNo(articleNo);
+					articleVO.setQ_parentNo(parentNo);
+					articleVO.setQ_title(title);
+					articleVO.setQ_id(id);
+					articleVO.setQ_content(content);
+					articleVO.setQ_writeDate(writeDate);
+					 
+					
+					articlesList.add(articleVO);
+					
+	            
+
+	         }  
+	         rs.close();
+				pstmt.close();
+				conn.close();
+	         
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      
+	      
+	      return articlesList;
+	   }
+	public ArrayList<ArticleVO> getMemberlist(){
+	       
+        ArrayList<ArticleVO> list = new ArrayList<ArticleVO>();
+       
+        try{//실행
+           String sql = "select * from t_board";
+            pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
+           
+            while(rs.next()){
+               ArticleVO vo = new ArticleVO();
+               
+               vo.setArticleNo(rs.getInt(1));
+                vo.setId(rs.getString(2));
+                vo.setTitle(rs.getString(3));
+               
+                vo.setWriteDate(rs.getDate(4));
+                
+                list.add(vo);
+                
+                
+            }
+            rs.close();
+            pstmt.close();
+            conn.close();
+        }catch(Exception e){          
+            e.printStackTrace();     
+        } 
+        
+        return list;
+    }
 	 
 }

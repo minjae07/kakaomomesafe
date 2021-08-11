@@ -43,6 +43,7 @@ public class BoardDAO {
 	
 	public List<ArticleVO> selectAllArticlesList() {
 		List<ArticleVO> articlesList = new ArrayList<>();
+		
 		try {
 			conn = dataFactory.getConnection();
 			/* level : 오라클에서 제공하는 가상 컬럼으로 글의 깊이를 나타냄 */
@@ -175,6 +176,7 @@ public class BoardDAO {
 			String id = articleVO.getId();
 			String imageFileName = articleVO.getImageFileName();
 			
+			
 			String sql = "INSERT INTO t_board (articleNo, parentNo, id, title, content, imageFileName)"
 						+" VALUES (?, ?, ?, ?, ?, ?)";
 			
@@ -185,6 +187,7 @@ public class BoardDAO {
 			pstmt.setString(4, title);
 			pstmt.setString(5, content);
 			pstmt.setString(6, imageFileName);
+			
 			
 			pstmt.executeUpdate();
 			
@@ -436,68 +439,61 @@ public class BoardDAO {
 			articleVO.setId(id);
 			articleVO.setWriteDate(writeDate);
 			
-			rs.close();
-			pstmt.close();
-			conn.close();
+			
 			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		
 		return articleVO;
 	}
-	public ArrayList<ArticleVO> getMemberlist(String keyField, String keyWord) {
+	public ArrayList<ArticleVO> getMemberlist2(String keyWord, String keyField) {
 	      ArrayList<ArticleVO> articlesList = new ArrayList<>();
+	     
 	      try {
 	         conn = dataFactory.getConnection();
 	         /* level : 오라클에서 제공하는 가상 컬럼으로 글의 깊이를 나타냄 */
-	         if(keyField.equals("id")) {
-	         String sql ="select * from t_board "
-	                    
-	                  
-	                 +"WHERE "+keyField+" LIKE '%"+keyWord+"%' order by id";
-	            
+
+	         String sql ="select * from t_board  WHERE "+keyField+"  LIKE '%"   +keyWord+   "%' order by id";
+	         
 	           
 	            pstmt = conn.prepareStatement(sql);
+	            
 	            rs = pstmt.executeQuery();
-	         }
-	         else if(keyField.equals("title")){
-	            String sql ="select * from t_board "
-	                       
-	                     
-	                 +"WHERE "+keyField+" LIKE '%"+keyWord+"%' order by title";
 	            
-	           
-	            pstmt = conn.prepareStatement(sql);
-	             rs = pstmt.executeQuery(sql);   
-	         }
+	            System.out.println("rs : " + rs.getRow());
+	         
 	         while(rs.next()) {
-	            int articleNo = rs.getInt("articleNo");
-	            int parentNo = rs.getInt("parentNo");
-	            String title = rs.getString("title");
-	            String content = rs.getString("content");
-	            String id = rs.getString("id");
-	            Date writeDate = rs.getDate("writeDate");
-	            int hit = rs.getInt("hit");
+	        	   
+					int articleNo = rs.getInt("articleNo");
+					int parentNo = rs.getInt("parentNo");
+					String title = rs.getString("title");
+					String id = rs.getString("id");
+					String content = rs.getString("content");
+					Date writeDate = rs.getDate("writeDate");
+					
+					
+					ArticleVO articleVO = new ArticleVO();
+					
+					
+					articleVO.setArticleNo(articleNo);
+					articleVO.setParentNo(parentNo);
+					articleVO.setTitle(title);
+					articleVO.setId(id);
+					articleVO.setContent(content);
+					articleVO.setWriteDate(writeDate);
+					 
+					
+					articlesList.add(articleVO);
+					
 	            
-	            ArticleVO ArticleVO = new ArticleVO();
-	            
-	            ArticleVO.setArticleNo(articleNo);
-	            ArticleVO.setParentNo(parentNo);
-	            ArticleVO.setTitle(title);
-	            ArticleVO.setContent(content);
-	            ArticleVO.setId(id);
-	            ArticleVO.setWriteDate(writeDate);
-	            
-	            
-	            articlesList.add(ArticleVO);
-	            
-	            rs.close();
-	                pstmt.close();
-	                conn.close();
 
 	         }  
+	         rs.close();
+				pstmt.close();
+				conn.close();
 	         
 	      } catch (Exception e) {
 	         e.printStackTrace();
@@ -525,19 +521,22 @@ public class BoardDAO {
 	               vo.setArticleNo(rs.getInt(1));
 	                vo.setId(rs.getString(2));
 	                vo.setTitle(rs.getString(3));
+	               
 	                vo.setWriteDate(rs.getDate(4));
 	                
 	                list.add(vo);
 	                
-	                rs.close();
-	                pstmt.close();
-	                conn.close();
+	                
 	            }
+	            rs.close();
+                pstmt.close();
+                conn.close();
 	        }catch(Exception e){          
 	            e.printStackTrace();     
 	        } 
 	        
 	        return list;
 	    }
+	    
 	 
 }

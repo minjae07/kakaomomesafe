@@ -54,10 +54,11 @@ public class BoardService {
 	public int addReply(ArticleVO articleVO) {
 		return boardDAO.insertNewArticle(articleVO);
 	}
-	public ArrayList<ArticleVO> serachArticle(String keyField, String keyWord){
-	      ArrayList<ArticleVO> memberList = boardDAO.getMemberlist();
-	      boardDAO.getMemberlist(keyField, keyWord);
-	      return memberList;
+	public ArrayList<ArticleVO> serachArticle(String keyWord, String keyField){
+	      ArrayList<ArticleVO> articleList = boardDAO.getMemberlist2(keyWord, keyField);
+	      
+	      return articleList;
 	      
 	   }
+	
 }

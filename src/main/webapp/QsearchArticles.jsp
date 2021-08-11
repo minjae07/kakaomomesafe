@@ -4,10 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="articlesList" value="${articleMap.articlesList }" />
 <c:set var="totArticles" value="${articleMap.totArticles }" />
 <c:set var="section" value="${articleMap.section }" />
 <c:set var="pageNum" value="${articleMap.pageNum }" />
+<c:set var="searchArticleList1" value="${searchArticleList1 }" />
 
 <%
 	request.setCharacterEncoding("utf-8");
@@ -26,7 +26,7 @@
 	</style>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/board.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/board_menu.css">
-	<script type="text/javascript">
+<script type="text/javascript">
 		var newName,
 		    n = 0;
 		var popleft,
@@ -53,13 +53,13 @@ function searchCheck1() {
 	</script>
 </head>
 <body>
-	 <section class="notice">
+	<section class="notice">
 		<div class="page-title">
 		    <div class="container" OnClick="location.href ='${pageContext.request.contextPath}/Qboard/QlistArticles.do' " style="cursor:pointer;">
 		        <h3>MOME QnA</h3>
 		    </div>
 		</div>
-		<!-- board menu area -->
+<!-- board menu area -->
 		<div class="container">
 		    <ul>
 				<li><a href="${pageContext.request.contextPath}/intro.html">지도로 돌아가기</a></li>
@@ -68,7 +68,7 @@ function searchCheck1() {
 				<li><a href="${pageContext.request.contextPath}/blog.jsp">Blog</a></li>
 		    </ul>
 		</div>
-                        <!-- board seach area -->
+	 <!-- board seach area -->
                         <div id="board-search">
                             <div class="container">
                                 <div class="search-window">
@@ -77,7 +77,7 @@ function searchCheck1() {
                                         <!-- 검색 -->
                                         <form action="${pageContext.request.contextPath}/Qboard/QsearchArticles.do" name="frmSearch1">
                                             <select name="qkeyField" class="select">
-                                            	<option value="q_title">제목</option>
+                                                <option value="q_title">제목</option>
                                                 <option value="q_id">작성자</option>
                                             </select>
                                             <input type="text" name="qkeyWord" placeholder="검색어를 입력해주세요." />
@@ -86,31 +86,31 @@ function searchCheck1() {
                                     </div>
                                 </div>
                             </div>
-                            <!-- board list area -->
-                            <div id="board-list">
-                                <div class="container">
-                                    <table class="board-table">
-                                        <thead>
-                                            <tr style="font-size: 16px;">
-                                                <th scope="col" class="th-num">번호</th>
-                                                <th scope="col" class="th-title">제목</th>
-                                                <th scope="col" class="th-writer">작성자</th>
-                                                <th scope="col" class="th-date">등록일</th>
-                                            </tr>
-                                        </thead>
-		<c:choose>
-			<c:when test="${empty articlesList }">
-				<tr height="10">
-					<td colspan="4">
-						<p align="center">
-							<b><span style="font-size: 15pt;">문의하기에 등록된 글이 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
-			</c:when>
-			<c:when test="${!empty articlesList}">
-				<c:forEach var="article" items="${articlesList}" varStatus="articleNum">			<!--varStatus :반복상태변수이름 --속성들 index, count, first, last  -->
-					<tr>
+	<!-- board list area -->
+		<div id="board-list">
+			<div class="container">
+				<table class="board-table">
+					<thead>
+						<tr style="font-size: 16px;">
+							<th scope="col" class="th-num">번호</th>
+							<th scope="col" class="th-title">제목</th>
+							<th scope="col" class="th-writer">작성자</th>
+							<th scope="col" class="th-date">등록일</th>
+						</tr>
+					</thead>
+					<c:choose>
+						<c:when test="${empty searchArticleList1}">
+							<tr height="10">
+								<td colspan="4">
+									<p align="center">
+										<b><span style="font-size: 15pt;">찾는 글이 없습니다.</span></b>
+									</p>
+								</td>
+							</tr>
+						</c:when>
+						<c:when test="${!empty searchArticleList1  }">
+							<c:forEach var="article" items="${searchArticleList1 }" varStatus="articleNum">			<!--varStatus :반복상태변수이름 --속성들 index, count, first, last  -->
+								<tr>
 						<td width="10%" align="center">${articleNum.count}</td>
 						<td width="50%" align="left" style="padding-left: 5%;">
 							<c:choose>
@@ -145,11 +145,11 @@ function searchCheck1() {
 						<td width="20%" align="center">${article.q_id}</td>
 						<td width="20%" align="center"><fmt:formatDate value="${article.q_writeDate }" pattern="yyyy-MM-dd HH:mm"/></td>
 					</tr>
-				</c:forEach>
-			</c:when>
-		</c:choose>
-	</table>
-	<div class="class2">
+							</c:forEach>
+						</c:when>
+					</c:choose>
+				</table>
+				<div class="class2">
 		<c:if test="${totArticles != null }">
 			<c:choose>
 				<c:when test="${totArticles > 100 }">			<!-- 글 개수가 100 초과인 경우 -->
@@ -189,5 +189,8 @@ function searchCheck1() {
 	<a class="class1" href="${contextPath}/Qboard/QarticleForm.do">
 		<p class="frm_btn">글쓰기</p>
 	</a>
+			</div>
+		</div>
+	</section>
 </body>
 </html>

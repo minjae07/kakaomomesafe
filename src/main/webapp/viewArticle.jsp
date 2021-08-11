@@ -275,24 +275,6 @@
    </div>
    </div>
    
-   <!-- 댓글 -->
-   <div>
-
-    <form method="post" action="/reply/write">
-    
-        <p>
-            <label>댓글 작성자</label> <input type="text" name="writer">
-        </p>
-        <p>
-            <textarea rows="5" cols="50" name="content"></textarea>
-        </p>
-        <p>
-        	<input type="hidden" name="bno" value="${view.bno}">
-            <button type="submit">댓글 작성</button>
-        </p>
-    </form>
-    
-</div>
-   <!-- 댓글 끝 -->
+   
 </body>
 </html>

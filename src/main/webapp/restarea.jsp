@@ -58,7 +58,7 @@
 		</div>
 		<div class="contents" style="left: 1000px;">
 			<span>
-				<a href="${contextPath}/blog.html">
+				<a href="${contextPath}/blog.jsp">
 				<img src="assets/img/car3.png" style="max-width: 250px; " /></a>
 			</span>
 			<div class="tooltip-content">

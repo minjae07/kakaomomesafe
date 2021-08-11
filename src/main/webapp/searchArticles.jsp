@@ -4,11 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="articlesList" value="${articleMap.articlesList }" />
 <c:set var="totArticles" value="${articleMap.totArticles }" />
 <c:set var="section" value="${articleMap.section }" />
 <c:set var="pageNum" value="${articleMap.pageNum }" />
-
+<c:set var="searchArticleList" value="${searchArticleList }" />
 <%
 	request.setCharacterEncoding("utf-8");
 %>
@@ -50,8 +49,6 @@
 			
 			return true;
 		}
-
-
 	</script>
 </head>
 <body>
@@ -70,8 +67,7 @@
 				<li><a href="${pageContext.request.contextPath}/blog.jsp">Blog</a></li>
 		    </ul>
 		</div>
-	    <!-- board seach area -->
-		<div id="board-search">
+<div id="board-search">
 			<div class="container">
 				<div class="search-window">
 					<div class="search-wrap">
@@ -79,10 +75,8 @@
 						<form action="${pageContext.request.contextPath}/board/searchArticles.do" name="frmSearch">
 						
 							<select name="keyField" class="select">
-								
 								<option value="title">제목</option>
 								<option value="id">작성자</option>
-								
 							</select>
 							
 							<input type="text" name="keyWord" placeholder="검색어를 입력해주세요." />
@@ -92,6 +86,7 @@
 				</div>
 			</div>
 		</div>
+
 	<!-- board list area -->
 		<div id="board-list">
 			<div class="container">
@@ -105,17 +100,17 @@
 						</tr>
 					</thead>
 					<c:choose>
-						<c:when test="${empty articlesList}">
+						<c:when test="${empty searchArticleList}">
 							<tr height="10">
 								<td colspan="4">
 									<p align="center">
-										<b><span style="font-size: 15pt;">게시판에 등록된 글이 없습니다.</span></b>
+										<b><span style="font-size: 15pt;">찾는 글이 없습니다.</span></b>
 									</p>
 								</td>
 							</tr>
 						</c:when>
-						<c:when test="${!empty articlesList  }">
-							<c:forEach var="article" items="${articlesList }" varStatus="articleNum">			<!--varStatus :반복상태변수이름 --속성들 index, count, first, last  -->
+						<c:when test="${!empty searchArticleList  }">
+							<c:forEach var="article" items="${searchArticleList }" varStatus="articleNum">			<!--varStatus :반복상태변수이름 --속성들 index, count, first, last  -->
 								<tr>
 									<td width="10%" align="center">${articleNum.count}</td>
 									<td width="50%" align="left" style="padding-left: 5%;">
@@ -155,7 +150,6 @@
 						</c:when>
 					</c:choose>
 				</table>
-			
 				<div class="class2">
 					<c:if test="${totArticles != null }">
 						<c:choose>
